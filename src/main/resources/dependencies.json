@@ -1,0 +1,133 @@
+{
+  "dependencies": [
+    {
+      "repo": "https://repo.maven.apache.org/maven2/",
+      "group": "org.slf4j",
+      "name": "slf4j-api",
+      "version": "1.7.36"
+    },
+    {
+      "repo": "https://repo.maven.apache.org/maven2/",
+      "group": "ch.qos.logback",
+      "name": "logback-core",
+      "version": "1.2.11"
+    },
+    {
+      "repo": "https://repo.maven.apache.org/maven2/",
+      "group": "ch.qos.logback",
+      "name": "logback-classic",
+      "version": "1.2.11"
+    },
+
+    {
+      "repo": "https://repo.maven.apache.org/maven2/",
+      "group": "org.jline",
+      "name": "jline",
+      "version": "3.21.0"
+    },
+    {
+      "repo": "https://repo.maven.apache.org/maven2/",
+      "group": "org.jline",
+      "name": "jline-terminal-jna",
+      "version": "3.21.0"
+    },
+    {
+      "repo": "https://repo.maven.apache.org/maven2/",
+      "group": "net.java.dev.jna",
+      "name": "jna",
+      "version": "5.10.0"
+    },
+
+    {
+      "repo": "https://repo.maven.apache.org/maven2/",
+      "group": "io.netty",
+      "name": "netty-common",
+      "version": "4.1.79.Final"
+    },
+    {
+      "repo": "https://repo.maven.apache.org/maven2/",
+      "group": "io.netty",
+      "name": "netty-handler",
+      "version": "4.1.79.Final"
+    },
+    {
+      "repo": "https://repo.maven.apache.org/maven2/",
+      "group": "io.netty",
+      "name": "netty-transport-native-epoll",
+      "version": "4.1.79.Final"
+    },
+    {
+      "repo": "https://repo.maven.apache.org/maven2/",
+      "group": "io.netty",
+      "name": "netty-transport-native-kqueue",
+      "version": "4.1.79.Final"
+    },
+
+    {
+      "repo": "https://repo.maven.apache.org/maven2/",
+      "group": "com.google.code.gson",
+      "name": "gson",
+      "version": "2.9.0"
+    },
+    {
+      "repo": "https://repo.maven.apache.org/maven2/",
+      "group": "com.google.protobuf",
+      "name": "protobuf-java",
+      "version": "3.18.2"
+    },
+
+    {
+      "repo": "https://repo.maven.apache.org/maven2/",
+      "group": "org.reflections",
+      "name": "reflections",
+      "version": "0.10.2"
+    },
+
+    {
+      "repo": "https://repo.maven.apache.org/maven2/",
+      "group": "dev.morphia.morphia",
+      "name": "morphia-core",
+      "version": "2.2.7"
+    },
+
+    {
+      "repo": "https://repo.maven.apache.org/maven2/",
+      "group": "org.greenrobot",
+      "name": "eventbus-java",
+      "version": "3.3.1"
+    },
+
+    {
+      "repo": "https://repo.maven.apache.org/maven2/",
+      "group": "org.quartz-scheduler",
+      "name": "quartz",
+      "version": "2.3.2"
+    },
+    {
+      "repo": "https://repo.maven.apache.org/maven2/",
+      "group": "org.quartz-scheduler",
+      "name": "quartz-jobs",
+      "version": "2.3.2"
+    },
+
+    {
+      "repo": "https://repo.maven.apache.org/maven2/",
+      "group": "org.luaj",
+      "name": "luaj-jse",
+      "version": "3.0.1"
+    },
+
+    {
+      "repo": "https://repo.maven.apache.org/maven2/",
+      "group": "com.esotericsoftware",
+      "name" : "reflectasm",
+      "version": "1.11.9"
+    },
+    {
+      "repo": "https://repo.maven.apache.org/maven2/",
+      "group": "com.github.davidmoten",
+      "name": "rtree-multi",
+      "version": "0.1"
+    }
+  ]
+}

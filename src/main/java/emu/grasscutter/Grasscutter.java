@@ -30,6 +30,7 @@ import emu.grasscutter.utils.JsonUtils;
 import emu.grasscutter.utils.Language;
 import emu.grasscutter.utils.StartupArguments;
 import emu.grasscutter.utils.Utils;
+import emu.grasscutter.utils.dependencies.DependencyLoader;
 import lombok.Getter;
 import lombok.Setter;
 import org.jline.reader.EndOfFileException;
@@ -92,6 +93,8 @@ public final class Grasscutter {
     }
 
     public static void main(String[] args) throws Exception {
+        DependencyLoader.loadDependencies();
+
         Crypto.loadKeys(); // Load keys from buffers.
 
         // Parse start-up arguments.

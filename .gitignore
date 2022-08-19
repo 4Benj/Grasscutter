@@ -81,3 +81,4 @@ BuildConfig.java
 .DS_Store
 .directory
 data/hk4e/announcement/
+/libraries
