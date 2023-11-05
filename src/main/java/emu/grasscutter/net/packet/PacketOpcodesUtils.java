@@ -1,6 +1,7 @@
 package emu.grasscutter.net.packet;
 
 import emu.grasscutter.*;
+import emu.grasscutter.server.game.version.PacketOpcode;
 import emu.grasscutter.utils.JsonUtils;
 import it.unimi.dsi.fastutil.ints.*;
 import java.io.*;
@@ -42,6 +43,10 @@ public class PacketOpcodesUtils {
     public static String getOpcodeName(int opcode) {
         if (opcode <= 0) return "UNKNOWN";
         return opcodeMap.getOrDefault(opcode, "UNKNOWN");
+    }
+
+    public static String getOpcodeName(PacketOpcode opcode) {
+        return opcode.name();
     }
 
     public static void dumpPacketIds() {

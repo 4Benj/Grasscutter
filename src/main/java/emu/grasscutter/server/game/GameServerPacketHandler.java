@@ -2,18 +2,23 @@ package emu.grasscutter.server.game;
 
 import static emu.grasscutter.config.Configuration.GAME_INFO;
 
+import com.google.protobuf.GeneratedMessageV3;
+import com.google.protobuf.InvalidProtocolBufferException;
 import emu.grasscutter.Grasscutter;
 import emu.grasscutter.Grasscutter.ServerDebugMode;
 import emu.grasscutter.net.packet.*;
 import emu.grasscutter.server.event.game.ReceivePacketEvent;
 import emu.grasscutter.server.game.GameSession.SessionState;
+import emu.grasscutter.server.game.version.GameVersion;
 import it.unimi.dsi.fastutil.ints.*;
 
+import java.util.HashMap;
+
 public final class GameServerPacketHandler {
-    private final Int2ObjectMap<PacketHandler> handlers;
+    private final HashMap<PacketOpcodes, PacketHandler> handlers;
 
     public GameServerPacketHandler(Class<? extends PacketHandler> handlerClass) {
-        this.handlers = new Int2ObjectOpenHashMap<>();
+        this.handlers = new HashMap<>();
 
         this.registerHandlers(handlerClass);
     }
@@ -21,7 +26,7 @@ public final class GameServerPacketHandler {
     public void registerPacketHandler(Class<? extends PacketHandler> handlerClass) {
         try {
             var opcode = handlerClass.getAnnotation(Opcodes.class);
-            if (opcode == null || opcode.disabled() || opcode.value() <= 0) {
+            if (opcode == null || opcode.disabled()) {
                 return;
             }
 
@@ -44,28 +49,38 @@ public final class GameServerPacketHandler {
                 .debug("Registered " + this.handlers.size() + " " + handlerClass.getSimpleName() + "s");
     }
 
-    public void handle(GameSession session, int opcode, byte[] header, byte[] payload) {
-        PacketHandler handler = this.handlers.get(opcode);
+    public void handle(GameSession session, int opcode, GameVersion version, byte[] header, byte[] payload) {
+        PacketOpcodes operationCode = version.GetOperationCode(opcode);
+        PacketHandler handler = this.handlers.get(operationCode);
+        GeneratedMessageV3 message;
+
+        try {
+            message = version.GetMessage(operationCode).getParserForType().parseFrom(payload);
+        } catch(InvalidProtocolBufferException exception) {
+            Grasscutter.getLogger().error(exception.getMessage());
+            exception.printStackTrace();
+            return;
+        }
 
         if (handler != null) {
             try {
                 // Make sure session is ready for packets
                 SessionState state = session.getState();
 
-                if (opcode == PacketOpcodes.PingReq) {
+                if (operationCode == PacketOpcodes.PingReq) {
                     // Always continue if packet is ping request
-                } else if (opcode == PacketOpcodes.GetPlayerTokenReq) {
+                } else if (operationCode == PacketOpcodes.GetPlayerTokenReq) {
                     if (state != SessionState.WAITING_FOR_TOKEN) {
                         return;
                     }
                 } else if (state == SessionState.ACCOUNT_BANNED) {
                     session.close();
                     return;
-                } else if (opcode == PacketOpcodes.PlayerLoginReq) {
+                } else if (operationCode == PacketOpcodes.PlayerLoginReq) {
                     if (state != SessionState.WAITING_FOR_LOGIN) {
                         return;
                     }
-                } else if (opcode == PacketOpcodes.SetPlayerBornDataReq) {
+                } else if (operationCode == PacketOpcodes.SetPlayerBornDataReq) {
                     if (state != SessionState.PICKING_CHARACTER) {
                         return;
                     }
@@ -79,7 +94,8 @@ public final class GameServerPacketHandler {
                 ReceivePacketEvent event = new ReceivePacketEvent(session, opcode, payload);
                 event.call();
                 if (!event.isCanceled()) // If event is not canceled, continue.
-                handler.handle(session, header, event.getPacketData());
+                    handler.handle(session, message);
+                // handler.handle(session, header, event.getPacketData());
             } catch (Exception ex) {
                 // TODO Remove this when no more needed
                 ex.printStackTrace();

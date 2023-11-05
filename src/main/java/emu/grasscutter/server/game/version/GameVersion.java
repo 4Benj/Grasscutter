@@ -1,29 +1,41 @@
 package emu.grasscutter.server.game.version;
 
 import com.google.protobuf.GeneratedMessageV3;
+import emu.grasscutter.net.packet.PacketOpcodes;
 
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
-public class GameVersion {
-    private final String gameVersion;
-    private final Map<PacketOpcode, Integer> operationCodes;
-    private final Map<PacketOpcode, GeneratedMessageV3.Builder> protoBuilderDefinitions;
+public abstract class GameVersion {
+    private final List<String> gameVersion;
+    private final Map<Integer, PacketOpcodes> operationCodes;
+    private final Map<PacketOpcodes, Integer> opcodesIntegerMap;
+    private final Map<PacketOpcodes, GeneratedMessageV3> protoBuilder;
 
-    public GameVersion(String gameVersion, Map<PacketOpcode, Integer> operationCodes, Map<PacketOpcode, GeneratedMessageV3.Builder> protoDefinitions) {
+    public GameVersion(List<String> gameVersion, Map<Integer, PacketOpcodes> operationCodes, Map<PacketOpcodes, GeneratedMessageV3> protoDefinitions) {
         this.gameVersion = gameVersion;
+        this.protoBuilder = protoDefinitions;
         this.operationCodes = operationCodes;
-        this.protoBuilderDefinitions = protoDefinitions;
+        opcodesIntegerMap = new HashMap<>();
+        operationCodes.keySet().stream().forEach(integer -> {
+            opcodesIntegerMap.put(operationCodes.get(integer), integer);
+        });
     }
 
-    public String getGameVersion() {
+    public List<String> getGameVersions() {
         return gameVersion;
     }
 
-    public int GetOperationCode(PacketOpcode opCode) {
+    public PacketOpcodes GetOperationCode(int opCode) {
         return operationCodes.get(opCode);
     }
 
-    public GeneratedMessageV3.Builder GetMessageBuilder(PacketOpcode opCode) {
-        return protoBuilderDefinitions.get(opCode);
+    public int GetOperationCode(PacketOpcodes opCode) {
+        return opcodesIntegerMap.get(opCode);
+    }
+
+    public GeneratedMessageV3 GetMessage(PacketOpcodes opCode) {
+        return protoBuilder.get(opCode);
     }
 }

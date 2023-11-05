@@ -2,19 +2,19 @@ package emu.grasscutter.server.packet.send;
 
 import com.google.protobuf.ByteString;
 import emu.grasscutter.net.packet.*;
-import emu.grasscutter.net.proto.GetPlayerTokenRspOuterClass.GetPlayerTokenRsp;
+import emu.grasscutter.net.packet.response.GetPlayerTokenResponse;
 import emu.grasscutter.server.game.GameSession;
 import emu.grasscutter.utils.Crypto;
 
 public class PacketGetPlayerTokenRsp extends BasePacket {
 
     public PacketGetPlayerTokenRsp(GameSession session) {
-        super(PacketOpcodes.GetPlayerTokenRsp, true);
+        super(session.getVersion().GetOperationCode(PacketOpcodes.GetPlayerTokenRsp), true);
 
         this.setUseDispatchKey(true);
 
-        GetPlayerTokenRsp p =
-                GetPlayerTokenRsp.newBuilder()
+        GetPlayerTokenResponse p =
+            new GetPlayerTokenResponse()
                         .setUid(session.getPlayer().getUid())
                         .setToken(session.getAccount().getToken())
                         .setAccountType(1)
@@ -27,19 +27,18 @@ public class PacketGetPlayerTokenRsp extends BasePacket {
                         .setCountryCode("US")
                         .setClientVersionRandomKey("c25-314dd05b0b5f")
                         .setRegPlatform(3)
-                        .setClientIpStr(session.getAddress().getAddress().getHostAddress())
-                        .build();
+                        .setClientIpStr(session.getAddress().getAddress().getHostAddress());
 
-        this.setData(p.toByteArray());
+        this.setData(p.Serialize(session.getVersion()).toByteArray());
     }
 
     public PacketGetPlayerTokenRsp(GameSession session, int retcode, String msg, int blackEndTime) {
-        super(PacketOpcodes.GetPlayerTokenRsp, true);
+        super(session.getVersion().GetOperationCode(PacketOpcodes.GetPlayerTokenRsp), true);
 
         this.setUseDispatchKey(true);
 
-        GetPlayerTokenRsp p =
-                GetPlayerTokenRsp.newBuilder()
+        GetPlayerTokenResponse p =
+            new GetPlayerTokenResponse()
                         .setUid(session.getPlayer().getUid())
                         .setIsProficientPlayer(session.getPlayer().getAvatars().getAvatarCount() > 0)
                         .setRetcode(retcode)
@@ -47,20 +46,19 @@ public class PacketGetPlayerTokenRsp extends BasePacket {
                         .setBlackUidEndTime(blackEndTime)
                         .setRegPlatform(3)
                         .setCountryCode("US")
-                        .setClientIpStr(session.getAddress().getAddress().getHostAddress())
-                        .build();
+                        .setClientIpStr(session.getAddress().getAddress().getHostAddress());
 
-        this.setData(p.toByteArray());
+        this.setData(p.Serialize(session.getVersion()).toByteArray());
     }
 
     public PacketGetPlayerTokenRsp(
             GameSession session, String encryptedSeed, String encryptedSeedSign) {
-        super(PacketOpcodes.GetPlayerTokenRsp, true);
+        super(session.getVersion().GetOperationCode(PacketOpcodes.GetPlayerTokenRsp), true);
 
         this.setUseDispatchKey(true);
 
-        GetPlayerTokenRsp p =
-                GetPlayerTokenRsp.newBuilder()
+        GetPlayerTokenResponse p =
+            new GetPlayerTokenResponse()
                         .setUid(session.getPlayer().getUid())
                         .setToken(session.getAccount().getToken())
                         .setAccountType(1)
@@ -75,9 +73,8 @@ public class PacketGetPlayerTokenRsp extends BasePacket {
                         .setRegPlatform(3)
                         .setClientIpStr(session.getAddress().getAddress().getHostAddress())
                         .setServerRandKey(encryptedSeed)
-                        .setSign(encryptedSeedSign)
-                        .build();
+                        .setSign(encryptedSeedSign);
 
-        this.setData(p.toByteArray());
+        this.setData(p.Serialize(session.getVersion()).toByteArray());
     }
 }

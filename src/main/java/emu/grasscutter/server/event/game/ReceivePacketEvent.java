@@ -3,6 +3,7 @@ package emu.grasscutter.server.event.game;
 import emu.grasscutter.server.event.Cancellable;
 import emu.grasscutter.server.event.types.ServerEvent;
 import emu.grasscutter.server.game.GameSession;
+import emu.grasscutter.server.game.version.PacketOpcode;
 
 public final class ReceivePacketEvent extends ServerEvent implements Cancellable {
     private final GameSession gameSession;

@@ -1,7 +1,7 @@
 package emu.grasscutter.net.packet;
 
 import com.google.protobuf.GeneratedMessageV3;
-import emu.grasscutter.net.proto.PacketHeadOuterClass.PacketHead;
+import emu.grasscutter.net.packet.general.PacketHead;
 import java.io.*;
 
 public class BasePacket {
@@ -79,10 +79,10 @@ public class BasePacket {
             return this;
         }
         setHeader(
-                PacketHead.newBuilder()
+                new PacketHead()
                         .setClientSequenceId(clientSequence)
                         .setSentMs(System.currentTimeMillis())
-                        .build()
+                        .Serialize()
                         .toByteArray());
         return this;
     }

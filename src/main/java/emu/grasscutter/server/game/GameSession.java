@@ -9,6 +9,7 @@ import emu.grasscutter.game.Account;
 import emu.grasscutter.game.player.Player;
 import emu.grasscutter.net.packet.*;
 import emu.grasscutter.server.event.game.SendPacketEvent;
+import emu.grasscutter.server.game.version.GameVersion;
 import emu.grasscutter.utils.*;
 import io.netty.buffer.*;
 import java.io.File;
@@ -22,6 +23,8 @@ public class GameSession implements GameSessionManager.KcpChannel {
 
     @Getter @Setter private Account account;
     @Getter private Player player;
+
+    @Getter private GameVersion version;
 
     @Getter private long encryptSeed = Crypto.ENCRYPT_SEED;
     private byte[] encryptKey = Crypto.ENCRYPT_KEY;
@@ -223,8 +226,7 @@ public class GameSession implements GameSessionManager.KcpChannel {
                     default -> {}
                 }
 
-                // Handle
-                getServer().getPacketHandler().handle(this, opcode, header, payload);
+                getServer().getPacketHandler().handle(this, opcode, getVersion(), header, payload);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -247,7 +249,7 @@ public class GameSession implements GameSessionManager.KcpChannel {
             player.onLogout();
         }
         try {
-            send(new BasePacket(PacketOpcodes.ServerDisconnectClientNotify));
+            send(new BasePacket(getVersion().GetOperationCode(PacketOpcodes.ServerDisconnectClientNotify)));
         } catch (Throwable ignore) {
             Grasscutter.getLogger().warn("closing {} error", getAddress().getAddress().getHostAddress());
         }
