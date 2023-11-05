@@ -14,7 +14,7 @@ public class PacketGetPlayerTokenRsp extends BasePacket {
         this.setUseDispatchKey(true);
 
         GetPlayerTokenResponse p =
-            new GetPlayerTokenResponse()
+                new GetPlayerTokenResponse()
                         .setUid(session.getPlayer().getUid())
                         .setToken(session.getAccount().getToken())
                         .setAccountType(1)
@@ -38,7 +38,7 @@ public class PacketGetPlayerTokenRsp extends BasePacket {
         this.setUseDispatchKey(true);
 
         GetPlayerTokenResponse p =
-            new GetPlayerTokenResponse()
+                new GetPlayerTokenResponse()
                         .setUid(session.getPlayer().getUid())
                         .setIsProficientPlayer(session.getPlayer().getAvatars().getAvatarCount() > 0)
                         .setRetcode(retcode)
@@ -58,7 +58,7 @@ public class PacketGetPlayerTokenRsp extends BasePacket {
         this.setUseDispatchKey(true);
 
         GetPlayerTokenResponse p =
-            new GetPlayerTokenResponse()
+                new GetPlayerTokenResponse()
                         .setUid(session.getPlayer().getUid())
                         .setToken(session.getAccount().getToken())
                         .setAccountType(1)

@@ -2564,4 +2564,3 @@ public enum PacketOpcodes {
     WorldRoutineTypeCloseNotify,
     WorldRoutineTypeRefreshNotify
 }
-

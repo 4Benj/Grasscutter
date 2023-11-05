@@ -11,7 +11,6 @@ import emu.grasscutter.server.event.game.ReceivePacketEvent;
 import emu.grasscutter.server.game.GameSession.SessionState;
 import emu.grasscutter.server.game.version.GameVersion;
 import it.unimi.dsi.fastutil.ints.*;
-
 import java.util.HashMap;
 
 public final class GameServerPacketHandler {
@@ -49,14 +48,15 @@ public final class GameServerPacketHandler {
                 .debug("Registered " + this.handlers.size() + " " + handlerClass.getSimpleName() + "s");
     }
 
-    public void handle(GameSession session, int opcode, GameVersion version, byte[] header, byte[] payload) {
+    public void handle(
+            GameSession session, int opcode, GameVersion version, byte[] header, byte[] payload) {
         PacketOpcodes operationCode = version.GetOperationCode(opcode);
         PacketHandler handler = this.handlers.get(operationCode);
         GeneratedMessageV3 message;
 
         try {
             message = version.GetMessage(operationCode).getParserForType().parseFrom(payload);
-        } catch(InvalidProtocolBufferException exception) {
+        } catch (InvalidProtocolBufferException exception) {
             Grasscutter.getLogger().error(exception.getMessage());
             exception.printStackTrace();
             return;
@@ -94,7 +94,7 @@ public final class GameServerPacketHandler {
                 ReceivePacketEvent event = new ReceivePacketEvent(session, opcode, payload);
                 event.call();
                 if (!event.isCanceled()) // If event is not canceled, continue.
-                    handler.handle(session, message);
+                handler.handle(session, message);
                 // handler.handle(session, header, event.getPacketData());
             } catch (Exception ex) {
                 // TODO Remove this when no more needed

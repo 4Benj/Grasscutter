@@ -2,7 +2,6 @@ package emu.grasscutter.server.game.version;
 
 import com.google.protobuf.GeneratedMessageV3;
 import emu.grasscutter.net.packet.PacketOpcodes;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -13,14 +12,19 @@ public abstract class GameVersion {
     private final Map<PacketOpcodes, Integer> opcodesIntegerMap;
     private final Map<PacketOpcodes, GeneratedMessageV3> protoBuilder;
 
-    public GameVersion(List<String> gameVersion, Map<Integer, PacketOpcodes> operationCodes, Map<PacketOpcodes, GeneratedMessageV3> protoDefinitions) {
+    public GameVersion(
+            List<String> gameVersion,
+            Map<Integer, PacketOpcodes> operationCodes,
+            Map<PacketOpcodes, GeneratedMessageV3> protoDefinitions) {
         this.gameVersion = gameVersion;
         this.protoBuilder = protoDefinitions;
         this.operationCodes = operationCodes;
         opcodesIntegerMap = new HashMap<>();
-        operationCodes.keySet().stream().forEach(integer -> {
-            opcodesIntegerMap.put(operationCodes.get(integer), integer);
-        });
+        operationCodes.keySet().stream()
+                .forEach(
+                        integer -> {
+                            opcodesIntegerMap.put(operationCodes.get(integer), integer);
+                        });
     }
 
     public List<String> getGameVersions() {

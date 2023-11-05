@@ -12,10 +12,10 @@ public class StopServerInfo extends ProtocolMessage {
     private String url;
     private String contentMsg;
 
-
     @Override
     public Message Serialize(GameVersion gameVersion) {
-        Message.Builder messageBuilder = gameVersion.GetMessage(PacketOpcodes.GetPlayerTokenReq).toBuilder();
+        Message.Builder messageBuilder =
+                gameVersion.GetMessage(PacketOpcodes.GetPlayerTokenReq).toBuilder();
 
         if (messageBuilder == null) {
             // Handle the case where the message builder is not found for the specified OpCode.
@@ -72,7 +72,6 @@ public class StopServerInfo extends ProtocolMessage {
         return contentMsg;
     }
 
-
     // Setters
     public void setStopBeginTime(int stopBeginTime) {
         this.stopBeginTime = stopBeginTime;
@@ -89,6 +88,4 @@ public class StopServerInfo extends ProtocolMessage {
     public void setContentMsg(String contentMsg) {
         this.contentMsg = contentMsg;
     }
-
-
 }

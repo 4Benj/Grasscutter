@@ -1,7 +1,6 @@
 package emu.grasscutter.server.game.version;
 
 import emu.grasscutter.Grasscutter;
-
 import java.util.HashMap;
 
 public class VersionHandler {
@@ -12,8 +11,8 @@ public class VersionHandler {
     }
 
     private static void AddGameVersion(GameVersion version) {
-        for(String versionId : version.getGameVersions()) {
-            if(!GameVersionsMap.containsKey(versionId)) {
+        for (String versionId : version.getGameVersions()) {
+            if (!GameVersionsMap.containsKey(versionId)) {
                 Grasscutter.getLogger().error("CONFLICTING GAME VERSION DEFINITIONS %s", versionId);
                 continue;
             }

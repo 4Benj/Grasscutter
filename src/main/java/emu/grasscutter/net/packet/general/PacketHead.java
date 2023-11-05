@@ -3,10 +3,8 @@ package emu.grasscutter.net.packet.general;
 import com.google.protobuf.Descriptors;
 import com.google.protobuf.DynamicMessage;
 import com.google.protobuf.Message;
-import emu.grasscutter.net.packet.PacketOpcodes;
 import emu.grasscutter.net.packet.ProtocolMessage;
 import emu.grasscutter.server.game.version.GameVersion;
-
 import java.util.Map;
 
 public class PacketHead {

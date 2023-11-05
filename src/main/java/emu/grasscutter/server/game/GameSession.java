@@ -249,7 +249,9 @@ public class GameSession implements GameSessionManager.KcpChannel {
             player.onLogout();
         }
         try {
-            send(new BasePacket(getVersion().GetOperationCode(PacketOpcodes.ServerDisconnectClientNotify)));
+            send(
+                    new BasePacket(
+                            getVersion().GetOperationCode(PacketOpcodes.ServerDisconnectClientNotify)));
         } catch (Throwable ignore) {
             Grasscutter.getLogger().warn("closing {} error", getAddress().getAddress().getHostAddress());
         }

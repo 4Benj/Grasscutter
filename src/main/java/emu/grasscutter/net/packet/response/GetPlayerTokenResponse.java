@@ -8,7 +8,6 @@ import emu.grasscutter.net.packet.PacketOpcodes;
 import emu.grasscutter.net.packet.ProtocolMessage;
 import emu.grasscutter.net.packet.general.StopServerInfo;
 import emu.grasscutter.server.game.version.GameVersion;
-
 import java.util.List;
 
 public class GetPlayerTokenResponse extends ProtocolMessage {
@@ -56,8 +55,13 @@ public class GetPlayerTokenResponse extends ProtocolMessage {
             return null;
         }
 
-        if (!message.getDescriptorForType().getFullName().equals(
-                gameVersion.GetMessage(PacketOpcodes.GetPlayerTokenRsp).toBuilder().getDescriptorForType().getFullName())) {
+        if (!message
+                .getDescriptorForType()
+                .getFullName()
+                .equals(
+                        gameVersion.GetMessage(PacketOpcodes.GetPlayerTokenRsp).toBuilder()
+                                .getDescriptorForType()
+                                .getFullName())) {
             // Handle the case where the received message type doesn't match the expected type.
             return null;
         }
@@ -66,10 +70,12 @@ public class GetPlayerTokenResponse extends ProtocolMessage {
 
         Descriptors.Descriptor descriptor = message.getDescriptorForType();
 
-        getPlayerTokenResponse.securityCmdBuffer = (ByteString) getField(message, descriptor, "security_cmd_buffer");
+        getPlayerTokenResponse.securityCmdBuffer =
+                (ByteString) getField(message, descriptor, "security_cmd_buffer");
         getPlayerTokenResponse.gmUid = (int) getField(message, descriptor, "gm_uid");
         getPlayerTokenResponse.isGuest = (boolean) getField(message, descriptor, "is_guest");
-        getPlayerTokenResponse.unk3300Ajbbipfmbel = (boolean) getField(message, descriptor, "Unk3300_AJBBIPFMBEL");
+        getPlayerTokenResponse.unk3300Ajbbipfmbel =
+                (boolean) getField(message, descriptor, "Unk3300_AJBBIPFMBEL");
         getPlayerTokenResponse.keyId = (int) getField(message, descriptor, "key_id");
         getPlayerTokenResponse.sign = (String) getField(message, descriptor, "sign");
         getPlayerTokenResponse.secretKey = (String) getField(message, descriptor, "secret_key");
@@ -78,26 +84,35 @@ public class GetPlayerTokenResponse extends ProtocolMessage {
         getPlayerTokenResponse.extraBinData = (byte[]) getField(message, descriptor, "extra_bin_data");
         getPlayerTokenResponse.secretKeySeed = (long) getField(message, descriptor, "secret_key_seed");
         getPlayerTokenResponse.token = (String) getField(message, descriptor, "token");
-        getPlayerTokenResponse.serverRandKey = (String) getField(message, descriptor, "server_rand_key");
+        getPlayerTokenResponse.serverRandKey =
+                (String) getField(message, descriptor, "server_rand_key");
         getPlayerTokenResponse.cloudClientIp = (int) getField(message, descriptor, "cloud_client_ip");
         getPlayerTokenResponse.birthday = (String) getField(message, descriptor, "birthday");
         getPlayerTokenResponse.tag = (int) getField(message, descriptor, "tag");
         getPlayerTokenResponse.clientIpStr = (String) getField(message, descriptor, "client_ip_str");
         getPlayerTokenResponse.subChannelId = (int) getField(message, descriptor, "sub_channel_id");
         getPlayerTokenResponse.retcode = (int) getField(message, descriptor, "retcode");
-        getPlayerTokenResponse.clientVersionRandomKey = (String) getField(message, descriptor, "client_version_random_key");
+        getPlayerTokenResponse.clientVersionRandomKey =
+                (String) getField(message, descriptor, "client_version_random_key");
         getPlayerTokenResponse.psnId = (String) getField(message, descriptor, "psn_id");
-        getPlayerTokenResponse.isProficientPlayer = (boolean) getField(message, descriptor, "is_proficient_player");
+        getPlayerTokenResponse.isProficientPlayer =
+                (boolean) getField(message, descriptor, "is_proficient_player");
         getPlayerTokenResponse.platformType = (int) getField(message, descriptor, "platform_type");
         getPlayerTokenResponse.regPlatform = (int) getField(message, descriptor, "reg_platform");
-        getPlayerTokenResponse.blackUidEndTime = (int) getField(message, descriptor, "black_uid_end_time");
-        getPlayerTokenResponse.unk3300Cfbhahohdkc = (boolean) getField(message, descriptor, "Unk3300_CFBHAHOHDKC");
+        getPlayerTokenResponse.blackUidEndTime =
+                (int) getField(message, descriptor, "black_uid_end_time");
+        getPlayerTokenResponse.unk3300Cfbhahohdkc =
+                (boolean) getField(message, descriptor, "Unk3300_CFBHAHOHDKC");
         getPlayerTokenResponse.accountUid = (String) getField(message, descriptor, "account_uid");
-        getPlayerTokenResponse.finishCollectionIdList = (List<Integer>) getField(message, descriptor, "finish_collection_id_list");
+        getPlayerTokenResponse.finishCollectionIdList =
+                (List<Integer>) getField(message, descriptor, "finish_collection_id_list");
         getPlayerTokenResponse.msg = (String) getField(message, descriptor, "msg");
         getPlayerTokenResponse.countryCode = (String) getField(message, descriptor, "country_code");
         getPlayerTokenResponse.uid = (int) getField(message, descriptor, "uid");
-        getPlayerTokenResponse.stopServer = new StopServerInfo().Deserialize(gameVersion, (GeneratedMessageV3) getField(message, descriptor, "stop_server"));
+        getPlayerTokenResponse.stopServer =
+                new StopServerInfo()
+                        .Deserialize(
+                                gameVersion, (GeneratedMessageV3) getField(message, descriptor, "stop_server"));
 
         return getPlayerTokenResponse;
     }
